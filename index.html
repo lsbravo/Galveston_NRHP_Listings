@@ -14,7 +14,7 @@
 <script type="text/javascript" src="City_Project2.js"></script>
 <script type="text/javascript" src="ParcelsProject.js"></script>
 <script type="text/javascript" src="neighborhoods.js"></script>
-<script type="text/javascript" src="GalvestonBuildingsv2.js"></script>
+<script type="text/javascript" src="GalBuildv5.js"></script>
 
 <script>
 
@@ -78,19 +78,17 @@ style: nbStyle,
 
 function onEachFeature(feature, layer) {
     if (feature.properties && feature.properties.RESNAME) {
-        layer.bindPopup('<b>'+feature.properties.RESNAME+'</b></br>Date Listed: '+feature.properties['nrhp_Listed Date']+'</br>Significance: '+feature.properties['nrhp_Area of Significance']+'</br>Additional Info: <a href="'+feature.properties['nrhp_External Link']+'">National Archives</a>');
+        layer.bindPopup('<b>'+feature.properties.RESNAME+'</b></br>Address: '+feature.properties['nrhpListings_nrhp_Street & Number']+'</b></br>Date Listed: '+feature.properties['nrhpListings_nrhp_Status Date']+'</br>Significance: '+feature.properties['nrhpListings_Areas of Significance include']+'</br>Architectural Class: '+feature.properties['nrhpListings_Architectural Classifications include']+'</br>Additional Info: <a href="'+feature.properties['nrhpListings_nrhp_External Link']+'">National Archives</a>');
     }
 }
 
 
-L.geoJSON(Galveston_Buildings, {
+L.geoJSON(gn5, {
 pointToLayer: function(feature, latlng) {
 return new L.marker(latlng, {icon: myIcon});
 },
 onEachFeature: onEachFeature
 }).addTo(map);
-
-
 
 
 L.Control.textbox = L.Control.extend({

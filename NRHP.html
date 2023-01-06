@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <link rel="stylesheet" href="leaflet.css">
+	 <script src="leaflet.js"></script>
+</head>
+<body>
+<div id="map"></div>
+<style>
+	#map {position: absolute;top: 0;bottom: 0;left: 0;right: 0;}
+</style>
+
+
+<script type="text/javascript" src="City_Project2.js"></script>
+<script type="text/javascript" src="ParcelsProject.js"></script>
+<script type="text/javascript" src="neighborhoods.js"></script>
+<script type="text/javascript" src="GalvestonBuildingsv2.js"></script>
+
+<script>
+
+var southWest = L.latLng(29.279956, -94.827849),
+northEast = L.latLng(29.318276, -94.765382),
+bounds = L.latLngBounds(southWest, northEast);
+
+
+var map = L.map('map', {
+minZoom: 15,
+maxZoom: 17,
+maxBounds: bounds,
+maxBoundsViscosity: 1.0
+});
+
+map.setView([29.3, -94.79], 15);
+
+
+var myIcon = L.icon({
+    iconUrl: 'images/marker-icon.png',
+iconSize: [10,15],
+});
+
+
+var cityStyle = {
+"color": "#000000",
+"fillOpacity": 1
+};
+
+var parcelStyle = {
+    "color": "#FFFFFF",
+    "weight": .2,
+"fillOpacity": 0
+};
+
+var nbStyle = {
+    "color": "#000000",
+"weight": 0,
+"fillOpacity": 0
+};
+
+L.geoJSON(City_Project, {
+style: cityStyle
+}).addTo(map);
+
+L.geoJSON(parcel, {
+style: parcelStyle
+}).addTo(map);
+
+
+
+
+L.geoJSON(neighborhoods, {
+style: nbStyle,
+  onEachFeature: function (feature, layer) {
+	layer.bindTooltip(feature.properties.NAME, { 'permanent': true });
+}
+}).addTo(map);
+
+
+
+function onEachFeature(feature, layer) {
+    if (feature.properties && feature.properties.RESNAME) {
+        layer.bindPopup('<b>'+feature.properties.RESNAME+'</b></br>Date Listed: '+feature.properties['nrhp_Listed Date']+'</br>Significance: '+feature.properties['nrhp_Area of Significance']+'</br>Additional Info: <a href="'+feature.properties['nrhp_External Link']+'">National Archives</a>');
+    }
+}
+
+
+L.geoJSON(Galveston_Buildings, {
+pointToLayer: function(feature, latlng) {
+return new L.marker(latlng, {icon: myIcon});
+},
+onEachFeature: onEachFeature
+}).addTo(map);
+
+
+
+
+L.Control.textbox = L.Control.extend({
+		onAdd: function(map) {
+			
+		var text = L.DomUtil.create('div');
+		text.id = "info_text";
+		text.innerHTML = "<strong>GALVESTON</strong></br><info_text style='font-size:.3em; letter-spacing:.01rem; line-height:1rem; text-align:justify;'>Properties listed on the National Register of Historic Places</info_text>"
+		return text;
+		},
+
+		onRemove: function(map) {
+			// Nothing to do here
+		}
+	});
+	L.control.textbox = function(opts) { return new L.Control.textbox(opts);}
+	L.control.textbox({ position: 'bottomright' }).addTo(map);
+
+
+</script>
+
+
+</body>
+
+</html>

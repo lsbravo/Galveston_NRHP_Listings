@@ -35,7 +35,7 @@ map.setView([29.3, -94.79], 15);
 
 var myIcon = L.icon({
     iconUrl: 'images/marker-icon.png',
-iconSize: [10,15],
+iconSize: [12,20],
 });
 
 
@@ -90,6 +90,65 @@ return new L.marker(latlng, {icon: myIcon});
 onEachFeature: onEachFeature
 }).addTo(map);
 
+var goth = L.geoJSON(gn5, {
+pointToLayer: function(feature, latlng) {
+return L.circleMarker(latlng, {radius: 17, fillColor: '#ffffff', color: '#ffffff', fillOpacity: '.25', weight: '.5'});
+},
+filter: gothic
+});
+
+function gothic(feature) {
+if (feature.properties['nrhpListings_Architectural Classifications include'].includes("Gothic")) return true;
+}
+
+var vict = L.geoJSON(gn5, {
+pointToLayer: function(feature, latlng) {
+return L.circleMarker(latlng, {radius: 17, fillColor: '#ffffff', color: '#ffffff', fillOpacity: '.25', weight: '.5'});
+},
+filter: victorian
+});
+
+
+function victorian(feature) {
+if (feature.properties['nrhpListings_Architectural Classifications include'].includes("Victorian")) return true;
+}
+
+var queenA = L.geoJSON(gn5, {
+pointToLayer: function(feature, latlng) {
+return L.circleMarker(latlng, {radius: 17, fillColor: '#ffffff', color: '#ffffff', fillOpacity: '.25', weight: '.5'});
+},
+filter: queenanne
+});
+
+
+function queenanne(feature) {
+if (feature.properties['nrhpListings_Architectural Classifications include'].includes("Queen Anne")) return true;
+}
+
+var greekR = L.geoJSON(gn5, {
+pointToLayer: function(feature, latlng) {
+return L.circleMarker(latlng, {radius: 17, fillColor: '#ffffff', color: '#ffffff', fillOpacity: '.25', weight: '.5'});
+},
+filter: greekRevival
+});
+
+
+function greekRevival(feature) {
+if (feature.properties['nrhpListings_Architectural Classifications include'].includes("Greek Revival")) return true;
+}
+
+var comm = L.geoJSON(gn5, {
+pointToLayer: function(feature, latlng) {
+return L.circleMarker(latlng, {radius: 17, fillColor: '#ffffff', color: '#ffffff', fillOpacity: '.25', weight: '.5'});
+},
+filter: commercial
+});
+
+
+function commercial(feature) {
+if (feature.properties['nrhpListings_Architectural Classifications include'].includes("Commercial")) return true;
+}
+
 
 L.Control.textbox = L.Control.extend({
 		onAdd: function(map) {
@@ -107,6 +166,18 @@ L.Control.textbox = L.Control.extend({
 	L.control.textbox = function(opts) { return new L.Control.textbox(opts);}
 	L.control.textbox({ position: 'bottomright' }).addTo(map);
 
+
+
+var mixed = {
+"Gothic": goth,
+"Victoriam": vict,
+"Queen Anne" : queenA,
+"Greek Revival" : greekR,
+"Commercial": comm
+};
+
+
+L.control.layers(null, mixed, {position: 'bottomleft'}).addTo(map);
 
 </script>
 

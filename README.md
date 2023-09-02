@@ -1,6 +1,8 @@
 # Historic Architecture in Gavleston, Texas
 
-According to the National Archives Catalog, there are 80 NRHP-listed properties scattered across Galveston Island. This respository hosts data for an interactive webmap showing their locations.
+According to the National Archives Catalog, there are 80 NRHP-listed properties scattered across Galveston Island. This respository hosts data for an interactive webmap showing their locations. Currently still in process.
+
+![Galveston NRHP](https://github.com/lsbravo/Galveston_NRHP_Listings/assets/121823541/dd653b25-ee2c-4791-aff8-0a09059dacc9)
 
 ## Description
 
